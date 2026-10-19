@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer & Seller Forms - Penna Properties</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="Penna Properties" class="logo-img">
+                <span class="brand-text">Penna Properties
+                    <small>YOUR PROPERTY, OUR PRIORITY</small>
+                </span>
+            </a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Vision & Mission</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="requirements.html" class="active">Buy / Sell</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html" class="nav-cta">Enquire Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+        <h1>Buy or Sell With Us</h1>
+        <p>Tell us what you need, or list your property for sale</p>
+    </header>
+
+    <!-- TAB SWITCH -->
+    <section class="section">
+        <div class="container">
+            <div class="filter-bar">
+                <button class="filter-btn active" id="tabBuyerBtn" onclick="showTab('buyer')">🏠 I Want to Buy</button>
+                <button class="filter-btn" id="tabSellerBtn" onclick="showTab('seller')">🤝 I Want to Sell / List</button>
+            </div>
+
+            <!-- BUYER REQUIREMENT FORM -->
+            <div class="contact-form" id="buyerForm" style="max-width:700px;margin:0 auto;">
+                <h3 style="color:var(--primary);margin-bottom:8px;">Buyer Requirement Form</h3>
+                <p style="color:var(--gray);margin-bottom:20px;">
+                    Can't find the right property in our catalog? Tell us your requirement and we'll find a match for your budget.
+                </p>
+                <form onsubmit="submitBuyer(event)">
+                    <div class="form-group">
+                        <label for="b-name">Full Name *</label>
+                        <input type="text" id="b-name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-phone">Phone Number *</label>
+                        <input type="tel" id="b-phone" placeholder="10-digit mobile number" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-type">Property Type *</label>
+                        <select id="b-type">
+                            <option value="Residential Plot">Residential Plot</option>
+                            <option value="Commercial Plot">Commercial Plot</option>
+                            <option value="Individual House">Individual House</option>
+                            <option value="Apartment">Apartment / Flat</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Any">Any / Not Sure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-area">Preferred Area / Location</label>
+                        <input type="text" id="b-area" placeholder="e.g. Kovur, Magunta Layout, Mypadu Road">
+                    </div>
+                    <div class="form-group">
+                        <label for="b-budget">Budget Range *</label>
+                        <select id="b-budget">
+                            <option value="Under ₹15 Lakh">Under ₹15 Lakh</option>
+                            <option value="₹15 Lakh - ₹30 Lakh">₹15 Lakh - ₹30 Lakh</option>
+                            <option value="₹30 Lakh - ₹50 Lakh">₹30 Lakh - ₹50 Lakh</option>
+                            <option value="₹50 Lakh - ₹1 Crore">₹50 Lakh - ₹1 Crore</option>
+                            <option value="Above ₹1 Crore">Above ₹1 Crore</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="b-notes">Other Requirements</label>
+                        <textarea id="b-notes" rows="3" placeholder="e.g. east facing, near school, ready to move"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-accent" style="width:100%;">
+                        💬 Send Requirement via WhatsApp
+                    </button>
+                </form>
+                <p id="buyerSuccess" style="display:none;color:var(--green);font-weight:600;margin-top:15px;text-align:center;">
+                    ✅ Opening WhatsApp... Please press Send to deliver your requirement.
+                </p>
+            </div>
+
+            <!-- SELLER / OWNER SUBMISSION FORM -->
+            <div class="contact-form" id="sellerForm" style="max-width:700px;margin:0 auto;display:none;">
+                <h3 style="color:var(--primary);margin-bottom:8px;">Seller / Owner Submission Form</h3>
+                <p style="color:var(--gray);margin-bottom:20px;">
+                    Have a property to sell? List it with Penna Properties and we'll market it to serious buyers across Nellore.
+                </p>
+                <form onsubmit="submitSeller(event)">
+                    <div class="form-group">
+                        <label for="s-name">Owner Name *</label>
+                        <input type="text" id="s-name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="s-phone">Phone Number *</label>
+                        <input type="tel" id="s-phone" placeholder="10-digit mobile number" maxlength="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="s-type">Property Type *</label>
+                        <select id="s-type">
+                            <option value="Residential Plot">Residential Plot</option>
+                            <option value="Commercial Plot">Commercial Plot</option>
+                            <option value="Individual House">Individual House</option>
+                            <option value="Apartment">Apartment / Flat</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Agricultural Land">Agricultural Land</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="s-location">Property Location *</label>
+                        <input type="text" id="s-location" placeholder="Area / village / survey details" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="s-area">Area / Size</label>
+                        <input type="text" id="s-area" placeholder="e.g. 200 sq. yards, 1150 sq. ft">
+                    </div>
+                    <div class="form-group">
+                        <label for="s-price">Expected Price</label>
+                        <input type="text" id="s-price" placeholder="e.g. ₹20,00,000">
+                    </div>
+                    <div class="form-group">
+                        <label for="s-notes">More Details</label>
+                        <textarea id="s-notes" rows="3" placeholder="Approvals, facing, documents available, etc."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-accent" style="width:100%;">
+                        💬 Submit Property via WhatsApp
+                    </button>
+                </form>
+                <p id="sellerSuccess" style="display:none;color:var(--green);font-weight:600;margin-top:15px;text-align:center;">
+                    ✅ Opening WhatsApp... Please press Send to submit your property.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Penna Properties</h4>
+                    <p>Your trusted real estate partner in Nellore, Andhra Pradesh. Plots, apartments, and commercial spaces.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">Vision & Mission</a>
+                    <a href="catalog.html">Catalog</a>
+                    <a href="requirements.html">Buy / Sell</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <a href="#">👤 N. Chandrakanth Reddy</a>
+                    <a href="tel:+918328287337">📞 +91 83282 87337</a>
+                    <a href="mailto:info@pennaproperties.in">✉️ info@pennaproperties.in</a>
+                    <a href="#">📍 Nellore, Andhra Pradesh</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Penna Properties. Real Estate Sales & Marketing. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        const OWNER_WHATSAPP = "918328287337";
+
+        function showTab(which) {
+            const buyer = document.getElementById('buyerForm');
+            const seller = document.getElementById('sellerForm');
+            const buyerBtn = document.getElementById('tabBuyerBtn');
+            const sellerBtn = document.getElementById('tabSellerBtn');
+
+            if (which === 'buyer') {
+                buyer.style.display = 'block';
+                seller.style.display = 'none';
+                buyerBtn.classList.add('active');
+                sellerBtn.classList.remove('active');
+            } else {
+                buyer.style.display = 'none';
+                seller.style.display = 'block';
+                sellerBtn.classList.add('active');
+                buyerBtn.classList.remove('active');
+            }
+        }
+
+        function val(id) { return document.getElementById(id).value.trim(); }
+
+        function submitBuyer(e) {
+            e.preventDefault();
+            const name = val('b-name');
+            const phone = val('b-phone');
+            if (!name) { alert('Please enter your name.'); return; }
+            if (!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit phone number.'); return; }
+
+            let text = "*Buyer Requirement - Penna Properties*%0A%0A";
+            text += "*Name:* " + encodeURIComponent(name) + "%0A";
+            text += "*Phone:* " + encodeURIComponent(phone) + "%0A";
+            text += "*Looking For:* " + encodeURIComponent(val('b-type')) + "%0A";
+            if (val('b-area')) text += "*Preferred Area:* " + encodeURIComponent(val('b-area')) + "%0A";
+            text += "*Budget:* " + encodeURIComponent(val('b-budget')) + "%0A";
+            if (val('b-notes')) text += "*Other:* " + encodeURIComponent(val('b-notes')) + "%0A";
+
+            window.open("https://wa.me/" + OWNER_WHATSAPP + "?text=" + text, "_blank");
+            document.getElementById('buyerSuccess').style.display = 'block';
+            e.target.reset();
+        }
+
+        function submitSeller(e) {
+            e.preventDefault();
+            const name = val('s-name');
+            const phone = val('s-phone');
+            const location = val('s-location');
+            if (!name) { alert('Please enter your name.'); return; }
+            if (!/^\d{10}$/.test(phone)) { alert('Please enter a valid 10-digit phone number.'); return; }
+            if (!location) { alert('Please enter the property location.'); return; }
+
+            let text = "*New Property Listing - Penna Properties*%0A%0A";
+            text += "*Owner:* " + encodeURIComponent(name) + "%0A";
+            text += "*Phone:* " + encodeURIComponent(phone) + "%0A";
+            text += "*Type:* " + encodeURIComponent(val('s-type')) + "%0A";
+            text += "*Location:* " + encodeURIComponent(location) + "%0A";
+            if (val('s-area')) text += "*Area:* " + encodeURIComponent(val('s-area')) + "%0A";
+            if (val('s-price')) text += "*Expected Price:* " + encodeURIComponent(val('s-price')) + "%0A";
+            if (val('s-notes')) text += "*Details:* " + encodeURIComponent(val('s-notes')) + "%0A";
+
+            window.open("https://wa.me/" + OWNER_WHATSAPP + "?text=" + text, "_blank");
+            document.getElementById('sellerSuccess').style.display = 'block';
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>

@@ -22,6 +22,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">Vision & Mission</a></li>
                 <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="requirements.html">Buy / Sell</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="contact.html" class="nav-cta">Enquire Now</a></li>
             </ul>
@@ -103,16 +104,6 @@
                 <div class="detail-wrapper">
                     <div>
                         <img src="${p.image}" alt="${p.title}" class="detail-img">
-                        <div class="coords-box">
-                            <div class="coord">
-                                <span class="label">Latitude</span>
-                                <span class="value">${p.latitude}</span>
-                            </div>
-                            <div class="coord">
-                                <span class="label">Longitude</span>
-                                <span class="value">${p.longitude}</span>
-                            </div>
-                        </div>
                         <a href="${mapsUrl}" target="_blank" rel="noopener" class="map-link">
                             🗺️ Open Location in Google Maps
                         </a>
@@ -123,10 +114,12 @@
                         <div class="detail-location">📍 ${p.location}</div>
                         <div class="detail-price">${p.price}</div>
 
+                        ${p.nearbyLandmark ? '<div class="landmark-box"><span class="landmark-icon">🧭</span><div><strong>Nearby Landmark:</strong> ' + p.nearbyLandmark + '</div></div>' : ''}
+
                         <p class="detail-description">${p.description}</p>
 
                         <table class="detail-table">
-                            <tr><td>Property Type</td><td>${typeLabel}</td></tr>
+                            <tr><td>Property Type</td><td>${p.category || typeLabel}</td></tr>
                             <tr><td>Area</td><td>${p.area}</td></tr>
                             <tr><td>Facing</td><td>${p.facing}</td></tr>
                             <tr><td>Survey Number</td><td>${p.surveyNumber}</td></tr>

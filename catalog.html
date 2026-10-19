@@ -22,6 +22,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">Vision & Mission</a></li>
                 <li><a href="catalog.html" class="active">Catalog</a></li>
+                <li><a href="requirements.html">Buy / Sell</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="contact.html" class="nav-cta">Enquire Now</a></li>
             </ul>
@@ -31,8 +32,21 @@
     <!-- PAGE HEADER -->
     <header class="page-header">
         <h1>Property Catalog</h1>
-        <p>Browse our available plots and apartments</p>
+        <p>Plots, apartments and investment opportunities in Nellore</p>
     </header>
+
+    <!-- CATALOG INTRO -->
+    <section class="section" style="padding-bottom:0;">
+        <div class="container">
+            <p style="max-width:820px;margin:0 auto;text-align:center;font-size:1.1rem;color:var(--dark);">
+                Explore our handpicked selection of properties across Nellore. Every listing below is backed by
+                verified NUDA / DTCP approvals, clear survey numbers and an exact location on Google Maps.
+                Click any property to see full details, pricing and documentation. Can't find what you're looking
+                for? <a href="contact.html" style="color:var(--accent);font-weight:600;">Tell us your requirement</a>
+                and we'll find the right match for your budget.
+            </p>
+        </div>
+    </section>
 
     <!-- NEWLY AVAILABLE HEADER SECTION -->
     <section class="section">
@@ -49,14 +63,37 @@
     <section class="section" style="background:var(--white);">
         <div class="container">
             <h2 class="section-title">All Properties</h2>
-            <p class="section-subtitle">Filter by type to find what you need</p>
+            <p class="section-subtitle">Filter by type, location and budget to find the right match</p>
 
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">All</button>
-                <button class="filter-btn" data-filter="plot" onclick="applyFilter('plot', this)">Plots</button>
-                <button class="filter-btn" data-filter="apartment" onclick="applyFilter('apartment', this)">Apartments</button>
+            <!-- ADVANCED FILTER PANEL -->
+            <div class="filter-panel">
+                <h3>🔎 Find Your Property</h3>
+                <div class="filter-fields">
+                    <div class="filter-field">
+                        <label for="filterCategory">Property Type</label>
+                        <select id="filterCategory" onchange="applyCatalogFilters()">
+                            <option value="">All Types</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="filterLocation">Location</label>
+                        <select id="filterLocation" onchange="applyCatalogFilters()">
+                            <option value="">All Locations</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="filterBudget">Budget</label>
+                        <select id="filterBudget" onchange="applyCatalogFilters()">
+                            <option value="">Any Budget</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-clear" onclick="clearCatalogFilters()">Clear Filters</button>
+                </div>
             </div>
 
+            <div class="filter-count" id="filterCount"></div>
             <div class="property-grid" id="allGrid"></div>
         </div>
     </section>
@@ -100,22 +137,8 @@
         }
         renderProperties('newlyGrid', newly);
 
-        // All properties with filtering
-        function applyFilter(type, btn) {
-            document.querySelectorAll('.filter-btn').forEach(function (b) {
-                b.classList.remove('active');
-            });
-            btn.classList.add('active');
-
-            const list = type === 'all'
-                ? PROPERTIES
-                : PROPERTIES.filter(function (p) { return p.type === type; });
-
-            renderProperties('allGrid', list);
-        }
-
-        // Initial render
-        renderProperties('allGrid', PROPERTIES);
+        // Set up the advanced filters (category, location, budget)
+        initCatalogFilters();
     </script>
 </body>
 </html>
