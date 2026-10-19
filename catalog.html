@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog - Penna Properties</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="Penna Properties" class="logo-img">
+                <span class="brand-text">Penna Properties
+                    <small>YOUR PROPERTY, OUR PRIORITY</small>
+                </span>
+            </a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Vision & Mission</a></li>
+                <li><a href="catalog.html" class="active">Catalog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html" class="nav-cta">Enquire Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+        <h1>Property Catalog</h1>
+        <p>Browse our available plots and apartments</p>
+    </header>
+
+    <!-- NEWLY AVAILABLE HEADER SECTION -->
+    <section class="section">
+        <div class="container">
+            <div class="newly-banner" id="newlyBanner">
+                <span class="badge">✨ NEWLY AVAILABLE</span>
+                <span>Fresh listings just added — grab them before they're gone!</span>
+            </div>
+            <div class="property-grid" id="newlyGrid"></div>
+        </div>
+    </section>
+
+    <!-- ALL PROPERTIES -->
+    <section class="section" style="background:var(--white);">
+        <div class="container">
+            <h2 class="section-title">All Properties</h2>
+            <p class="section-subtitle">Filter by type to find what you need</p>
+
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">All</button>
+                <button class="filter-btn" data-filter="plot" onclick="applyFilter('plot', this)">Plots</button>
+                <button class="filter-btn" data-filter="apartment" onclick="applyFilter('apartment', this)">Apartments</button>
+            </div>
+
+            <div class="property-grid" id="allGrid"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Penna Properties</h4>
+                    <p>Your trusted real estate partner in Nellore, Andhra Pradesh. Plots, apartments, and commercial spaces.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">Vision & Mission</a>
+                    <a href="catalog.html">Catalog</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <a href="#">👤 N. Chandrakanth Reddy</a>
+                    <a href="tel:+918328287337">📞 +91 83282 87337</a>
+                    <a href="mailto:info@pennaproperties.in">✉️ info@pennaproperties.in</a>
+                    <a href="#">📍 Nellore, Andhra Pradesh</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Penna Properties. Real Estate Sales & Marketing. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Newly available at the top (header)
+        const newly = PROPERTIES.filter(function (p) { return p.newlyAvailable; });
+        if (newly.length === 0) {
+            document.getElementById('newlyBanner').style.display = 'none';
+        }
+        renderProperties('newlyGrid', newly);
+
+        // All properties with filtering
+        function applyFilter(type, btn) {
+            document.querySelectorAll('.filter-btn').forEach(function (b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+
+            const list = type === 'all'
+                ? PROPERTIES
+                : PROPERTIES.filter(function (p) { return p.type === type; });
+
+            renderProperties('allGrid', list);
+        }
+
+        // Initial render
+        renderProperties('allGrid', PROPERTIES);
+    </script>
+</body>
+</html>

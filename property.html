@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Details - Penna Properties</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="Penna Properties" class="logo-img">
+                <span class="brand-text">Penna Properties
+                    <small>YOUR PROPERTY, OUR PRIORITY</small>
+                </span>
+            </a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">Vision & Mission</a></li>
+                <li><a href="catalog.html">Catalog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="contact.html" class="nav-cta">Enquire Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- DETAIL CONTENT -->
+    <section class="section">
+        <div class="container">
+            <a href="catalog.html" class="back-link">← Back to Catalog</a>
+            <div id="detailContent"></div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Penna Properties</h4>
+                    <p>Your trusted real estate partner in Nellore, Andhra Pradesh. Plots, apartments, and commercial spaces.</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">Vision & Mission</a>
+                    <a href="catalog.html">Catalog</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <a href="#">👤 N. Chandrakanth Reddy</a>
+                    <a href="tel:+918328287337">📞 +91 83282 87337</a>
+                    <a href="mailto:info@pennaproperties.in">✉️ info@pennaproperties.in</a>
+                    <a href="#">📍 Nellore, Andhra Pradesh</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Penna Properties. Real Estate Sales & Marketing. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        const id = getQueryParam('id');
+        const p = findProperty(id);
+        const container = document.getElementById('detailContent');
+
+        if (!p) {
+            container.innerHTML = '<h2 style="text-align:center;color:var(--gray);">Property not found. <a href="catalog.html" style="color:var(--accent);">Go back to catalog</a>.</h2>';
+        } else {
+            document.title = p.title + ' - Penna Properties';
+
+            // Google Maps quicklink built from lat/long
+            const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=' + p.latitude + ',' + p.longitude;
+
+            // WhatsApp enquiry quicklink with this property's details pre-filled
+            const OWNER_WHATSAPP = "918328287337";
+            let waText = "*Property Enquiry - Penna Properties*%0A%0A";
+            waText += "I am interested in this property:%0A%0A";
+            waText += "*" + encodeURIComponent(p.title) + "*%0A";
+            waText += "*Location:* " + encodeURIComponent(p.location) + "%0A";
+            waText += "*Price:* " + encodeURIComponent(p.price) + "%0A";
+            waText += "*Survey No:* " + encodeURIComponent(p.surveyNumber) + "%0A";
+            waText += "*Approval No:* " + encodeURIComponent(p.approvalNumber) + "%0A%0A";
+            waText += "Please share more details.";
+            const waUrl = "https://wa.me/" + OWNER_WHATSAPP + "?text=" + waText;
+
+            // Amenities chips
+            const amenitiesHtml = p.amenities.map(function (a) {
+                return '<span class="amenity-chip">✔ ' + a + '</span>';
+            }).join('');
+
+            const typeLabel = p.type === 'plot' ? 'Plot / Land' : 'Apartment / Flat';
+
+            container.innerHTML = `
+                <div class="detail-wrapper">
+                    <div>
+                        <img src="${p.image}" alt="${p.title}" class="detail-img">
+                        <div class="coords-box">
+                            <div class="coord">
+                                <span class="label">Latitude</span>
+                                <span class="value">${p.latitude}</span>
+                            </div>
+                            <div class="coord">
+                                <span class="label">Longitude</span>
+                                <span class="value">${p.longitude}</span>
+                            </div>
+                        </div>
+                        <a href="${mapsUrl}" target="_blank" rel="noopener" class="map-link">
+                            🗺️ Open Location in Google Maps
+                        </a>
+                    </div>
+
+                    <div class="detail-info">
+                        <h1>${p.title}</h1>
+                        <div class="detail-location">📍 ${p.location}</div>
+                        <div class="detail-price">${p.price}</div>
+
+                        <p class="detail-description">${p.description}</p>
+
+                        <table class="detail-table">
+                            <tr><td>Property Type</td><td>${typeLabel}</td></tr>
+                            <tr><td>Area</td><td>${p.area}</td></tr>
+                            <tr><td>Facing</td><td>${p.facing}</td></tr>
+                            <tr><td>Survey Number</td><td>${p.surveyNumber}</td></tr>
+                            <tr><td>Approval Number</td><td>${p.approvalNumber}</td></tr>
+                            <tr><td>Approval Type</td><td>${p.approvalType}</td></tr>
+                        </table>
+
+                        <h3 style="color:var(--primary);margin-top:20px;">Amenities & Features</h3>
+                        <div class="amenities-list">${amenitiesHtml}</div>
+
+                        <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+                            <a href="${waUrl}" target="_blank" rel="noopener" class="map-link" style="background:#25D366; margin:0;">
+                                💬 Enquire on WhatsApp
+                            </a>
+                            <a href="tel:+918328287337" class="btn btn-accent" style="display:inline-flex; align-items:center;">
+                                📞 Call Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
